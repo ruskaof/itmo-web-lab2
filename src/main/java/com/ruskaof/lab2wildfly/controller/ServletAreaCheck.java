@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 /**
  * Gets x, y, r in request attributes. Parses them. Returns 400 if it can't.
@@ -24,9 +26,9 @@ public class ServletAreaCheck extends HttpServlet {
         System.out.println("ServletAreaCheck");
         long startTime = System.nanoTime();
 
-        final var xString = (String) request.getParameter(PARAM.X.toString());
-        final var yString = (String) request.getParameter(PARAM.Y.toString());
-        final var rString = (String) request.getParameter(PARAM.R.toString());
+        final var xString = request.getParameter(PARAM.X.toString());
+        final var yString = request.getParameter(PARAM.Y.toString());
+        final var rString = request.getParameter(PARAM.R.toString());
 
         final float x;
         final float y;
@@ -48,21 +50,25 @@ public class ServletAreaCheck extends HttpServlet {
         if (tableData == null) tableData = new TableData();
 
 
-        tableData.tableRowList().add(new TableRow(x, y, r, isHit, LocalDateTime.now().toString(), System.nanoTime() - startTime));
+        tableData.tableRowList().add(new TableRow(x, y, r, isHit, LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMMM, dd, yyyy HH:mm:ss", Locale.US)), (System.nanoTime() - startTime) / 1000000.0F));
         request.getSession().setAttribute(PARAM.TABLE_DATA.toString(), tableData);
 
         final var writer = response.getWriter();
 
         for (int i = 0; i < tableData.tableRowList().size(); i++) {
-            final var row = tableData.tableRowList().get(i);
             writer.println("<tr>");
+            final var row = tableData.tableRowList().get(i);
             writer.println("<td>" + i + "</td>");
             writer.println("<td>" + row.x() + "</td>");
             writer.println("<td>" + row.y() + "</td>");
             writer.println("<td>" + row.r() + "</td>");
-            writer.println("<td>" + row.wasHit() + "</td>");
+            if (row.wasHit()) {
+                writer.println("<td> <p class=\"status status-hit\">HIT</p></td>");
+            } else {
+                writer.println("<td> <p class=\"status status-miss\">MISS</p></td>");
+            }
             writer.println("<td>" + row.attemptTime() + "</td>");
-            writer.println("<td>" + row.processTimeMills() + "</td>");
+            writer.println("<td>" + row.processTimeMills() + "ms" + "</td>");
             writer.println("</tr>");
         }
         writer.close();
