@@ -1,3 +1,5 @@
+// Этот код дерьмо, я знаю. Когда-нибудь я почитаю про архитектуру pure-js...
+
 document.addEventListener("DOMContentLoaded", () => {
     /* Init graph parameters */
     const markLen = 20
@@ -8,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const axisColor = getCssColor("--primary-text")
     const areasColor = getCssColor("--areas-color")
 
+    let dots = []
+
+
     /* Init html canvas element */
     const canvas = (document.getElementById("graph"));
     const ctx = canvas.getContext("2d");
@@ -17,9 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* Init saving mouse moving history for cool animation */
     const mouseMoveHistory = [];
-    const nCursors = 30
+    const nCursors = 3
     const cursorsLagIntervalMills = 100
-    const cursorSizeCoeff = 1
+    const cursorSizeCoeff = 0.8
     for (let i = 0; i < nCursors; i++) {
         mouseMoveHistory.push({x: -1, y: -1});
     }
@@ -41,7 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     /* Draw the graph */
+    updateDots()
     drawGraph()
+
 
     /* Make the cool cursor animation */
     function animateCursor() {
@@ -57,9 +64,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
         requestAnimationFrame(animateCursor);
     }
+
     requestAnimationFrame(animateCursor);
 
+    /* Make dots update after buttons click */
+
+    $("#reset_button").on("click", () => {
+        updateDots()
+    })
+    $("#submit_button").on("click", () => {
+        updateDots()
+    })
+
+
     /* The following functions should only be used inside the drawGraph() */
+
+    // Contains dots history
+
+    canvas.addEventListener("click", () => {
+        updateDots()
+    })
+
+    function updateDots() {
+        fetch(BASE_URL + "/ServletController", {
+            method: "GET",
+        }).then((response) => {
+            return response.text()
+        }).then((response_text) => {
+            dots = JSON.parse(response_text).tableRowList
+            dots.forEach((dot) => {
+                console.log("drawing " + convertXToCanvasCoordinate(dot.x, dot.r, rValue) + " " + convertYToCanvasCoordinate(dot.y, dot.r, rValue) + "was " + dot.x + " " + dot.y)
+            })
+        });
+    }
+
+    function drawDots() {
+        dots.forEach((dot) => {
+            x = convertXToCanvasCoordinate(dot.x, dot.r, rValue)
+            y = convertYToCanvasCoordinate(dot.y, dot.r, rValue)
+            ctx.fillStyle = cursorColor;
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fill();
+        })
+    }
+
     function getCssColor(name) {
         return window
             .getComputedStyle(document.documentElement)
@@ -285,6 +334,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         drawHorizontalAxis();
         drawVerticalAxis();
+
+        drawDots()
     }
 
     /**
@@ -301,15 +352,15 @@ document.addEventListener("DOMContentLoaded", () => {
      * This method should be used to convert local canvas x value
      * to a correct math x value of the graph using the R value
      */
-    function convertXToRadiusOf(x,  r) {
-        return ((x - width / 2) / rValue) * r;
+    function convertXToCanvasCoordinate(x, r, canvasR) {
+        return (x / r * canvasR + width / 2);
     }
 
     /**
      * This method should be used to convert local canvas y value
      * to a correct math x value of the graph using the R value
      */
-    function convertYToRadiusOf(y, r) {
-        return ((height - y - height / 2) / rValue) * r;
+    function convertYToCanvasCoordinate(y, r, canvasR) {
+        return (-y / r * canvasR + height / 2);
     }
 });
