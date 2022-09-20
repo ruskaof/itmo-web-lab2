@@ -5,9 +5,11 @@ import com.ruskaof.lab2wildfly.model.PARAM;
 import com.ruskaof.lab2wildfly.model.TableData;
 import com.ruskaof.lab2wildfly.model.TableRow;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
@@ -18,18 +20,13 @@ import java.time.LocalDateTime;
 @WebServlet(name = "ServletAreaCheck")
 public class ServletAreaCheck extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("This servlet does not support get requests.");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("ServletAreaCheck");
         long startTime = System.nanoTime();
 
-        final var xString = (String) request.getAttribute(PARAM.X.toString());
-        final var yString = (String) request.getAttribute(PARAM.Y.toString());
-        final var rString = (String) request.getAttribute(PARAM.R.toString());
+        final var xString = (String) request.getParameter(PARAM.X.toString());
+        final var yString = (String) request.getParameter(PARAM.Y.toString());
+        final var rString = (String) request.getParameter(PARAM.R.toString());
 
         final float x;
         final float y;
@@ -69,6 +66,11 @@ public class ServletAreaCheck extends HttpServlet {
             writer.println("</tr>");
         }
         writer.close();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 
     private static boolean isHit(float x, float y, float r) {

@@ -3,7 +3,7 @@ export function bindDataSendingButtons(
     BASE_URL
 ) {
     $("#reset_button").on("click", () => {
-        submitClickWithBody({
+        submitClickWithParameters({
             clear: 1
         })
     })
@@ -11,7 +11,7 @@ export function bindDataSendingButtons(
         console.log("button click")
         const formData = Object.fromEntries(new FormData(document.getElementById("form")).entries());
 
-        submitClickWithBody({
+        submitClickWithParameters({
             x: formData.x,
             y: formData.y,
             r: formData.r,
@@ -31,7 +31,7 @@ export function bindDataSendingButtons(
         const x = convertXToRadiusOf(event.offsetX, r);
         const y = convertYToRadiusOf(event.offsetY, r);
 
-        submitClickWithBody({
+        submitClickWithParameters({
             x: x,
             r: r,
             y: y
@@ -55,13 +55,9 @@ export function bindDataSendingButtons(
     }
 
 
-    function submitClickWithBody(body) {
-        fetch(BASE_URL + "/ServletController", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
+    function submitClickWithParameters(parameters) {
+        fetch(BASE_URL + "/ServletController?" + new URLSearchParams(parameters), {
+            method: "GET",
         }).then((response) => {
             return response.text()
         }).then((response_text) => {
