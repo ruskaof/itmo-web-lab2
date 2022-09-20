@@ -1,5 +1,5 @@
+![areas](https://user-images.githubusercontent.com/91731881/191268280-36da686f-d529-4fd7-9a39-5d652c99aa75.png)
 
-![](https://se.ifmo.ru/courses/web?p_p_id=iapsportletlab7_WAR_iapsportlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_cacheability=cacheLevelPage?1663679861057)
 
 Разработать веб-приложение на базе сервлетов и JSP, определяющее попадание точки на координатной плоскости в заданную область.
 
