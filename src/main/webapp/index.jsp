@@ -133,10 +133,7 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-<script src="./src/scripts/data_sending.js"></script>
-<script src="./src/scripts/graph.js"></script>
-<script src="./src/scripts/validation.js"></script>
+<script type="module" src="src/index.js"></script>
 </body>
 
 </html>

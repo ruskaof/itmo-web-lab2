@@ -1,12 +1,12 @@
-const BASE_URL = "http://localhost:8080/lab2WildFly-1.0-SNAPSHOT"
-
-document.addEventListener("DOMContentLoaded", () => {
-    bindCanvasClick()
-    bindSubmitFormClick()
-    bindResetButtonClick()
-});
-
-function bindSubmitFormClick() {
+export function bindDataSendingButtons(
+    clickSentCallback,
+    BASE_URL
+) {
+    $("#reset_button").on("click", () => {
+        submitClickWithBody({
+            clear: 1
+        })
+    })
     $("#submit_button").on("click", () => {
         console.log("button click")
         const formData = Object.fromEntries(new FormData(document.getElementById("form")).entries());
@@ -17,17 +17,7 @@ function bindSubmitFormClick() {
             r: formData.r,
         })
     })
-}
 
-function bindResetButtonClick() {
-    $("#reset_button").on("click", () => {
-        submitClickWithBody({
-            clear: 1
-        })
-    })
-}
-
-function bindCanvasClick()   {
     const canvas = (document.getElementById("graph"));
     const width = canvas.width;
     const height = canvas.height;
@@ -63,20 +53,23 @@ function bindCanvasClick()   {
     function convertYToRadiusOf(y, r) {
         return ((height - y - height / 2) / rValue) * r;
     }
-}
 
-function submitClickWithBody(body) {
-    fetch(BASE_URL + "/ServletController", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-    }).then((response) => {
-        return response.text()
-    }).then((response_text) => {
-        $(function () {
-            $("#" + "tbody").html(response_text);
+
+    function submitClickWithBody(body) {
+        fetch(BASE_URL + "/ServletController", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        }).then((response) => {
+            return response.text()
+        }).then((response_text) => {
+            $(function () {
+                $("#" + "tbody").html(response_text);
+            });
+        }).then(() => {
+            clickSentCallback()
         });
-    });
+    }
 }

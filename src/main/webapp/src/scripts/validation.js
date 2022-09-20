@@ -1,13 +1,13 @@
-const documentIDs = {
-    GRAPH_CLICK_SUBMIT_FORM: "form",
-    TABLE_OF_CLICKS: "my_table",
-    SUBMIT_BUTTON: "submit_button",
-    RESET_BUTTON: "reset_button",
-    INPUT_X: "input_x",
-    WARNING_TEXT: "input_x_warning",
-}
+export function includeValidation() {
 
-function includeValidation() {
+    const documentIDs = {
+        GRAPH_CLICK_SUBMIT_FORM: "form",
+        TABLE_OF_CLICKS: "my_table",
+        SUBMIT_BUTTON: "submit_button",
+        RESET_BUTTON: "reset_button",
+        INPUT_X: "input_x",
+        WARNING_TEXT: "input_x_warning",
+    }
     const xInputElement = document.getElementById(documentIDs.INPUT_X);
     const submitButtonElement = document.getElementById(
         documentIDs.SUBMIT_BUTTON
@@ -61,9 +61,5 @@ function includeValidation() {
     xInputElement.addEventListener("input", validateX);
     xInputElement.dispatchEvent(new Event("input"));
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    includeValidation()
-});
 
 

@@ -1,33 +1,39 @@
-// Этот код дерьмо, я знаю. Когда-нибудь я почитаю про архитектуру pure-js...
+function getCssColor(name) {
+    return window
+        .getComputedStyle(document.documentElement)
+        .getPropertyValue(name);
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-    /* Init graph parameters */
-    const markLen = 20
-    const arrowDifference = 20
-    const bgColor = getCssColor("--secondary-background")
-    const labelsColor = getCssColor("--secondary-text")
-    const cursorColor = getCssColor("--primary-text")
-    const axisColor = getCssColor("--primary-text")
-    const areasColor = getCssColor("--areas-color")
+/* Init graph parameters */
+const markLen = 20
+const arrowDifference = 20
+const bgColor = getCssColor("--secondary-background")
+const labelsColor = getCssColor("--secondary-text")
+const cursorColor = getCssColor("--primary-text")
+const axisColor = getCssColor("--primary-text")
+const areasColor = getCssColor("--areas-color")
 
-    let dots = []
+let dots = []
 
+/* Init html canvas element */
+const canvas = (document.getElementById("graph"));
+const ctx = canvas.getContext("2d");
+const width = canvas.width;
+const height = canvas.height;
+const rValue = width / 2.5
 
-    /* Init html canvas element */
-    const canvas = (document.getElementById("graph"));
-    const ctx = canvas.getContext("2d");
-    const width = canvas.width;
-    const height = canvas.height;
-    const rValue = width / 2.5
+/* Init saving mouse moving history for cool animation */
+const mouseMoveHistory = [];
+const nCursors = 3
+const cursorsLagIntervalMills = 100
+const cursorSizeCoeff = 0.8
+for (let i = 0; i < nCursors; i++) {
+    mouseMoveHistory.push({x: -1, y: -1});
+}
 
-    /* Init saving mouse moving history for cool animation */
-    const mouseMoveHistory = [];
-    const nCursors = 3
-    const cursorsLagIntervalMills = 100
-    const cursorSizeCoeff = 0.8
-    for (let i = 0; i < nCursors; i++) {
-        mouseMoveHistory.push({x: -1, y: -1});
-    }
+export function initializeCanvasGraph(
+    BASE_URL
+) {
 
     function drawAllCursorsByHistory(event) {
         for (let i = 0; i < nCursors; i++) {
@@ -67,41 +73,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     requestAnimationFrame(animateCursor);
 
-    /* Make dots update after buttons click */
-
-    $("#reset_button").on("click", () => {
-        updateDots()
-    })
-    $("#submit_button").on("click", () => {
-        updateDots()
-    })
-
 
     /* The following functions should only be used inside the drawGraph() */
 
-    // Contains dots history
 
-    canvas.addEventListener("click", () => {
-        updateDots()
-    })
-
-    function updateDots() {
-        fetch(BASE_URL + "/ServletController", {
-            method: "GET",
-        }).then((response) => {
-            return response.text()
-        }).then((response_text) => {
-            dots = JSON.parse(response_text).tableRowList
-            dots.forEach((dot) => {
-                console.log("drawing " + convertXToCanvasCoordinate(dot.x, dot.r, rValue) + " " + convertYToCanvasCoordinate(dot.y, dot.r, rValue) + "was " + dot.x + " " + dot.y)
-            })
-        });
-    }
 
     function drawDots() {
         dots.forEach((dot) => {
-            x = convertXToCanvasCoordinate(dot.x, dot.r, rValue)
-            y = convertYToCanvasCoordinate(dot.y, dot.r, rValue)
+            const x = convertXToCanvasCoordinate(dot.x, dot.r, rValue)
+            const y = convertYToCanvasCoordinate(dot.y, dot.r, rValue)
             ctx.fillStyle = cursorColor;
             ctx.beginPath();
             ctx.arc(x, y, 3, 0, Math.PI * 2);
@@ -109,11 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-    function getCssColor(name) {
-        return window
-            .getComputedStyle(document.documentElement)
-            .getPropertyValue(name);
-    }
 
     function drawHorizontalMarks() {
         ctx.strokeStyle = axisColor;
@@ -363,4 +338,17 @@ document.addEventListener("DOMContentLoaded", () => {
     function convertYToCanvasCoordinate(y, r, canvasR) {
         return (-y / r * canvasR + height / 2);
     }
-});
+
+    function updateDots() {
+        fetch(BASE_URL + "/ServletController", {
+            method: "GET",
+        }).then((response) => {
+            return response.text()
+        }).then((response_text) => {
+            dots = JSON.parse(response_text).tableRowList
+        });
+    }
+
+    initializeCanvasGraph.updateDots = updateDots
+}
+
