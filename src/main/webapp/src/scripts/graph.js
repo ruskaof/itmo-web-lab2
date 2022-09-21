@@ -4,36 +4,42 @@ function getCssColor(name) {
         .getPropertyValue(name);
 }
 
-/* Init graph parameters */
-const markLen = 20
-const arrowDifference = 20
-const bgColor = getCssColor("--secondary-background")
-const labelsColor = getCssColor("--secondary-text")
-const cursorColor = getCssColor("--primary-text")
-const axisColor = getCssColor("--primary-text")
-const areasColor = getCssColor("--areas-color")
 
-let dots = []
-
-/* Init html canvas element */
-const canvas = (document.getElementById("graph"));
-const ctx = canvas.getContext("2d");
-const width = canvas.width;
-const height = canvas.height;
-const rValue = width / 2.5
-
-/* Init saving mouse moving history for cool animation */
-const mouseMoveHistory = [];
-const nCursors = 3
-const cursorsLagIntervalMills = 100
-const cursorSizeCoeff = 0.8
-for (let i = 0; i < nCursors; i++) {
-    mouseMoveHistory.push({x: -1, y: -1});
-}
-
+// TODO
+/**
+ *
+ * @param BASE_URL
+ * @param parameters
+ */
 export function initializeCanvasGraph(
     BASE_URL
 ) {
+    /* Init graph parameters */
+    const markLen = 20
+    const arrowDifference = 20
+    const bgColor = getCssColor("--secondary-background")
+    const labelsColor = getCssColor("--secondary-text")
+    const cursorColor = getCssColor("--primary-text")
+    const axisColor = getCssColor("--primary-text")
+    const areasColor = getCssColor("--areas-color")
+
+    let dots = []
+
+    /* Init html canvas element */
+    const canvas = (document.getElementById("graph"));
+    const ctx = canvas.getContext("2d");
+    const width = canvas.width;
+    const height = canvas.height;
+    const rValue = width / 2.5
+
+    /* Init saving mouse moving history for cool animation */
+    const mouseMoveHistory = [];
+    const nCursors = 3
+    const cursorsLagIntervalMills = 100
+    const cursorSizeCoeff = 0.8
+    for (let i = 0; i < nCursors; i++) {
+        mouseMoveHistory.push({x: -1, y: -1});
+    }
 
     function drawAllCursorsByHistory(event) {
         for (let i = 0; i < nCursors; i++) {
@@ -75,7 +81,6 @@ export function initializeCanvasGraph(
 
 
     /* The following functions should only be used inside the drawGraph() */
-
 
 
     function drawDots() {

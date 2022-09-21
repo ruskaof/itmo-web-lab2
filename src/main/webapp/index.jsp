@@ -1,5 +1,3 @@
-<%@ page import="com.ruskaof.lab2wildfly.model.PARAM" %>
-<%@ page import="com.ruskaof.lab2wildfly.model.TableData" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
@@ -9,6 +7,7 @@
     <meta charset="utf-8"/>
     <title>lab1</title>
     <link rel="stylesheet" href="./src/style/main.css">
+    <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
 </head>
 <body>
 <header>
@@ -129,6 +128,22 @@
                 </table>
             </div>
         </div>
+    </div>
+
+    <div class="list-item">
+        <div id="vk_auth">
+
+        </div>
+        <script>
+            VK.init({apiId: 51431725})
+
+            VK.Widgets.Auth("vk_auth", {
+                width: "500px",
+                onAuth: function(data) {
+                    console.log(data)
+                }
+            })
+        </script>
     </div>
 </div>
 

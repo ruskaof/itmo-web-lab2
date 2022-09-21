@@ -5,7 +5,6 @@ import com.ruskaof.lab2wildfly.model.PARAM;
 import com.ruskaof.lab2wildfly.model.TableData;
 import com.ruskaof.lab2wildfly.model.TableRow;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -72,11 +71,6 @@ public class ServletAreaCheck extends HttpServlet {
             writer.println("</tr>");
         }
         writer.close();
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 
     private static boolean isHit(float x, float y, float r) {
