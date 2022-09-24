@@ -1,6 +1,6 @@
-package com.ruskaof.lab2wildfly.model;
+package com.ruskaof.lab2wildfly.utils;
 
-public enum PARAM {
+public enum Parameter {
     X("x"),
     Y("y"),
     R("r"),
@@ -11,7 +11,8 @@ public enum PARAM {
 
 
     private final String stringName;
-    PARAM(String stringName) {
+
+    Parameter(String stringName) {
         this.stringName = stringName;
     }
 

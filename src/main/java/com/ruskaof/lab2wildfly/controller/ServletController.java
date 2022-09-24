@@ -1,6 +1,6 @@
 package com.ruskaof.lab2wildfly.controller;
 
-import com.ruskaof.lab2wildfly.model.PARAM;
+import com.ruskaof.lab2wildfly.utils.Parameter;
 import com.vk.api.sdk.client.TransportClient;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
@@ -40,13 +40,13 @@ public class ServletController extends HttpServlet {
 
 
         //  Select a servlet to proceed the request
-        if (request.getParameter(PARAM.X.toString()) != null
-                && request.getParameter(PARAM.Y.toString()) != null
-                && request.getParameter(PARAM.R.toString()) != null) {
+        if (request.getParameter(Parameter.X.toString()) != null
+                && request.getParameter(Parameter.Y.toString()) != null
+                && request.getParameter(Parameter.R.toString()) != null) {
 
 
             getServletContext().getNamedDispatcher("ServletAreaCheck").forward(request, response);
-        } else if (request.getParameter(PARAM.CLEAR.toString()) != null) {
+        } else if (request.getParameter(Parameter.CLEAR.toString()) != null) {
             getServletContext().getNamedDispatcher("ServletClearTable").forward(request, response);
         } else {
             getServletContext().getNamedDispatcher("ServletGetTable").forward(request, response);

@@ -3,19 +3,22 @@
 <%@ page import="java.io.BufferedReader" %>
 <%@ page import="java.io.InputStreamReader" %>
 <%@ page import="java.io.IOException" %>
+<%@ page import="com.ruskaof.lab2wildfly.utils.Urls" %>
+<%@ page import="com.ruskaof.lab2wildfly.utils.Constants" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!-- Redirecting to VK to get the code for authorization -->
 <%
     if (request.getParameter("code") == null) {
-        String redirectURL = "https://oauth.vk.com/authorize?client_id=51433610&redirect_uri=http://127.0.0.1:80/lab2WildFly-1.0-SNAPSHOT/";
+//        String redirectURL = "https://oauth.vk.com/authorize?client_id=51433610&redirect_uri=http://127.0.0.1:80/lab2WildFly-1.0-SNAPSHOT/";
+        String redirectURL = Urls.vkOauthAuthorizePage(Constants.clientId, Urls.BASE_URL);
         response.sendRedirect(redirectURL);
     } else {
         try {
-            String redirectURL = "https://oauth.vk.com/access_token?client_id=51433610&client_secret=ka2ybPtS0YoEU6WBMEFX&" +
-                    "redirect_uri=http://127.0.0.1:80/lab2WildFly-1.0-SNAPSHOT/&code=" + request.getParameter("code");
-
+//            String redirectURL = "https://oauth.vk.com/access_token?client_id=51433610&client_secret=ka2ybPtS0YoEU6WBMEFX&" +
+//                    "redirect_uri=http://127.0.0.1:80/lab2WildFly-1.0-SNAPSHOT/&code=" + request.getParameter("code");
+            String redirectURL = Urls.vkOauthGetAccessToken(Constants.clientId, Urls.BASE_URL, Constants.clientSecret, request.getParameter("code"));
 
             String recv;
             StringBuilder recvbuff = new StringBuilder();
@@ -29,7 +32,7 @@
 
             System.out.println(recvbuff);
         } catch (IOException e) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.sendError(401);
         }
     }
 %>
@@ -40,7 +43,6 @@
     <meta charset="utf-8"/>
     <title>lab1</title>
     <link rel="stylesheet" href="./src/style/main.css">
-    <script src="https://vk.com/js/api/openapi.js?169" type="text/javascript"></script>
 </head>
 <body>
 <header>
@@ -163,19 +165,10 @@
         </div>
     </div>
 
-    <div class="list-item">
-        <div id="vk_auth">
-
-        </div>
-        <script>
-
-        </script>
-    </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="module" src="src/index.js"></script>
-<script src="./src/scripts/vk_auth.js"></script>
 </body>
 
 </html>

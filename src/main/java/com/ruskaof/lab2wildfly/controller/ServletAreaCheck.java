@@ -1,9 +1,9 @@
 package com.ruskaof.lab2wildfly.controller;
 
 
-import com.ruskaof.lab2wildfly.model.PARAM;
 import com.ruskaof.lab2wildfly.model.TableData;
 import com.ruskaof.lab2wildfly.model.TableRow;
+import com.ruskaof.lab2wildfly.utils.Parameter;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,9 +25,9 @@ public class ServletAreaCheck extends HttpServlet {
         System.out.println("ServletAreaCheck");
         long startTime = System.nanoTime();
 
-        final var xString = request.getParameter(PARAM.X.toString());
-        final var yString = request.getParameter(PARAM.Y.toString());
-        final var rString = request.getParameter(PARAM.R.toString());
+        final var xString = request.getParameter(Parameter.X.toString());
+        final var yString = request.getParameter(Parameter.Y.toString());
+        final var rString = request.getParameter(Parameter.R.toString());
 
         final float x;
         final float y;
@@ -45,12 +45,12 @@ public class ServletAreaCheck extends HttpServlet {
 
         final var isHit = isHit(x, y, r);
 
-        var tableData = (TableData) request.getSession().getAttribute(PARAM.TABLE_DATA.toString());
+        var tableData = (TableData) request.getSession().getAttribute(Parameter.TABLE_DATA.toString());
         if (tableData == null) tableData = new TableData();
 
 
         tableData.tableRowList().add(new TableRow(x, y, r, isHit, LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMMM, dd, yyyy HH:mm:ss", Locale.US)), (System.nanoTime() - startTime) / 1000000.0F));
-        request.getSession().setAttribute(PARAM.TABLE_DATA.toString(), tableData);
+        request.getSession().setAttribute(Parameter.TABLE_DATA.toString(), tableData);
 
         final var writer = response.getWriter();
 

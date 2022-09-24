@@ -1,15 +1,15 @@
 package com.ruskaof.lab2wildfly.controller;
 
 import com.google.gson.Gson;
-import com.ruskaof.lab2wildfly.model.PARAM;
 import com.ruskaof.lab2wildfly.model.TableData;
-import com.ruskaof.lab2wildfly.model.TableRow;
+import com.ruskaof.lab2wildfly.utils.Parameter;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 /**
  * Returns whole table data in JSON format
@@ -20,7 +20,7 @@ public class ServletGetTable extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        var tableData = (TableData) request.getSession().getAttribute(PARAM.TABLE_DATA.toString());
+        var tableData = (TableData) request.getSession().getAttribute(Parameter.TABLE_DATA.toString());
         if (tableData == null) tableData = new TableData();
 
         final var writer = response.getWriter();

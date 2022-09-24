@@ -1,7 +1,7 @@
 package com.ruskaof.lab2wildfly.controller;
 
-import com.ruskaof.lab2wildfly.model.PARAM;
 import com.ruskaof.lab2wildfly.model.TableData;
+import com.ruskaof.lab2wildfly.utils.Parameter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +16,6 @@ public class ServletClearTable extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getSession().setAttribute(PARAM.TABLE_DATA.toString(), new TableData());
+        request.getSession().setAttribute(Parameter.TABLE_DATA.toString(), new TableData());
     }
 }
