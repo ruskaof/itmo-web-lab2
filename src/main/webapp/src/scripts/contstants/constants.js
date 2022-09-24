@@ -7,4 +7,4 @@ export const documentIDs = {
     WARNING_TEXT: "input_x_warning",
 }
 
-export const BASE_URL = "http://localhost:8080/lab2WildFly-1.0-SNAPSHOT/"
+export const BASE_URL = "http://127.0.0.1:80/lab2WildFly-1.0-SNAPSHOT/"

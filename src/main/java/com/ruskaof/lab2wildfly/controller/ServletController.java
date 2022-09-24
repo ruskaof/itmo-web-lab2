@@ -1,6 +1,9 @@
 package com.ruskaof.lab2wildfly.controller;
 
 import com.ruskaof.lab2wildfly.model.PARAM;
+import com.vk.api.sdk.client.TransportClient;
+import com.vk.api.sdk.client.VkApiClient;
+import com.vk.api.sdk.httpclient.HttpTransportClient;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,8 +24,21 @@ import java.io.IOException;
  */
 @WebServlet(name = "ServletController", value = "/ServletController")
 public class ServletController extends HttpServlet {
+    private static final TransportClient transportClient = new HttpTransportClient();
+    private static final VkApiClient vk = new VkApiClient(transportClient);
+
+    private static final int APP_ID = 51433610;
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        UserAuthResponse authResponse = vk.oAuth()
+//                .userAuthorizationCodeFlow(APP_ID, CLIENT_SECRET, REDIRECT_URI, code)
+//                .execute();
+//
+//        UserActor actor = new UserActor(authResponse.getUserId(), authResponse.getAccessToken());
+
+
         //  Select a servlet to proceed the request
         if (request.getParameter(PARAM.X.toString()) != null
                 && request.getParameter(PARAM.Y.toString()) != null
@@ -41,4 +57,6 @@ public class ServletController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("wtf");
     }
+
+
 }

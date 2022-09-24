@@ -1,5 +1,38 @@
+<%@ page import="java.net.URL" %>
+<%@ page import="java.net.URLConnection" %>
+<%@ page import="java.io.BufferedReader" %>
+<%@ page import="java.io.InputStreamReader" %>
+<%@ page import="java.io.IOException" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<!-- Redirecting to VK to get the code for authorization -->
+<%
+    if (request.getParameter("code") == null) {
+        String redirectURL = "https://oauth.vk.com/authorize?client_id=51433610&redirect_uri=http://127.0.0.1:80/lab2WildFly-1.0-SNAPSHOT/";
+        response.sendRedirect(redirectURL);
+    } else {
+        try {
+            String redirectURL = "https://oauth.vk.com/access_token?client_id=51433610&client_secret=ka2ybPtS0YoEU6WBMEFX&" +
+                    "redirect_uri=http://127.0.0.1:80/lab2WildFly-1.0-SNAPSHOT/&code=" + request.getParameter("code");
+
+
+            String recv;
+            StringBuilder recvbuff = new StringBuilder();
+            URL jsonpage = new URL(redirectURL);
+            URLConnection urlcon = jsonpage.openConnection();
+            BufferedReader buffread = new BufferedReader(new InputStreamReader(urlcon.getInputStream()));
+
+            while ((recv = buffread.readLine()) != null)
+                recvbuff.append(recv);
+            buffread.close();
+
+            System.out.println(recvbuff);
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+    }
+%>
 
 <!DOCTYPE html>
 <html>
@@ -135,20 +168,14 @@
 
         </div>
         <script>
-            VK.init({apiId: 51431725})
 
-            VK.Widgets.Auth("vk_auth", {
-                width: "500px",
-                onAuth: function(data) {
-                    console.log(data)
-                }
-            })
         </script>
     </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="module" src="src/index.js"></script>
+<script src="./src/scripts/vk_auth.js"></script>
 </body>
 
 </html>
