@@ -44,12 +44,17 @@ public class ServletController extends HttpServlet {
                 && request.getParameter(Parameter.Y.toString()) != null
                 && request.getParameter(Parameter.R.toString()) != null) {
 
-
+            System.out.println("redirect to area_check");
             getServletContext().getNamedDispatcher("ServletAreaCheck").forward(request, response);
         } else if (request.getParameter(Parameter.CLEAR.toString()) != null) {
+            System.out.println("redirect to clear table");
             getServletContext().getNamedDispatcher("ServletClearTable").forward(request, response);
+        } else if (request.getParameter(Parameter.TABLE_HTMl.toString()) != null) {
+            System.out.println("redirect to get table");
+            getServletContext().getNamedDispatcher("ServletGetTableHtml").forward(request, response);
         } else {
-            getServletContext().getNamedDispatcher("ServletGetTable").forward(request, response);
+            System.out.println("redirect to get table clicks");
+            getServletContext().getNamedDispatcher("ServletGetTableClicks").forward(request, response);
         }
     }
 

@@ -14,8 +14,8 @@ import java.io.IOException;
 /**
  * Returns whole table data in JSON format
  */
-@WebServlet(name = "ServletGetTable", value = "/ServletGetTable")
-public class ServletGetTable extends HttpServlet {
+@WebServlet(name = "ServletGetTableClicks", value = "/ServletGetTableClicks")
+public class ServletGetTableClicks extends HttpServlet {
     private static final Gson gson = new Gson();
 
     @Override

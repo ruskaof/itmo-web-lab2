@@ -11,13 +11,13 @@
 <!-- Redirecting to VK to get the code for authorization -->
 <%
     if (request.getParameter("code") == null) {
-//        String redirectURL = "https://oauth.vk.com/authorize?client_id=51433610&redirect_uri=http://127.0.0.1:80/lab2WildFly-1.0-SNAPSHOT/";
+        System.out.println("go to get code");
         String redirectURL = Urls.vkOauthAuthorizePage(Constants.clientId, Urls.BASE_URL);
         response.sendRedirect(redirectURL);
     } else {
         try {
-//            String redirectURL = "https://oauth.vk.com/access_token?client_id=51433610&client_secret=ka2ybPtS0YoEU6WBMEFX&" +
-//                    "redirect_uri=http://127.0.0.1:80/lab2WildFly-1.0-SNAPSHOT/&code=" + request.getParameter("code");
+            System.out.println("code got");
+
             String redirectURL = Urls.vkOauthGetAccessToken(Constants.clientId, Urls.BASE_URL, Constants.clientSecret, request.getParameter("code"));
 
             String recv;
@@ -147,18 +147,7 @@
                     </thead>
 
                     <tbody id="tbody">
-                    <jsp:useBean id="table_data" class="com.ruskaof.lab2wildfly.model.TableData" scope="session"/>
-                    <c:forEach var="row" items="${table_data.tableRowList()}" varStatus="i">
-                        <tr>
-                            <td>${i.index}</td>
-                            <td>${row.x()}</td>
-                            <td>${row.y()}</td>
-                            <td>${row.r()}</td>
-                            <td>${row.wasHit()}</td>
-                            <td>${row.attemptTime()}</td>
-                            <td>${row.processTimeMills()}</td>
-                        </tr>
-                    </c:forEach>
+
                     </tbody>
                 </table>
             </div>

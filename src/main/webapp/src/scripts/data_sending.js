@@ -8,7 +8,6 @@ export function bindDataSendingButtons(
         })
     })
     $("#submit_button").on("click", () => {
-        console.log("button click")
         const formData = Object.fromEntries(new FormData(document.getElementById("form")).entries());
 
         submitClickWithParameters({
@@ -42,7 +41,7 @@ export function bindDataSendingButtons(
      * This method should be used to convert local canvas x value
      * to a correct math x value of the graph using the R value
      */
-    function convertXToRadiusOf(x,  r) {
+    function convertXToRadiusOf(x, r) {
         return ((x - width / 2) / rValue) * r;
     }
 
@@ -58,14 +57,16 @@ export function bindDataSendingButtons(
     function submitClickWithParameters(parameters) {
         fetch(BASE_URL + "/ServletController?" + new URLSearchParams(parameters), {
             method: "GET",
-        }).then((response) => {
-            return response.text()
-        }).then((response_text) => {
-            $(function () {
-                $("#" + "tbody").html(response_text);
-            });
         }).then(() => {
-            clickSentCallback()
-        });
+            fetch(BASE_URL + "/ServletController?table_html=1").then((response) => {
+                return response.text()
+            }).then((response_text) => {
+                $(function () {
+                    $("#" + "tbody").html(response_text);
+                });
+            }).then(() => {
+                clickSentCallback()
+            });
+        })
     }
 }

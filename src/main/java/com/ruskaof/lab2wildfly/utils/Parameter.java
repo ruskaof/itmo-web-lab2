@@ -7,7 +7,7 @@ public enum Parameter {
     ROUND("round_if_needed"),
     TABLE_DATA("table_data"),
     CLEAR("clear"),
-    GET_TABLE("");
+    TABLE_HTMl("table_html");
 
 
     private final String stringName;

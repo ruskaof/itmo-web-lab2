@@ -52,25 +52,25 @@ public class ServletAreaCheck extends HttpServlet {
         tableData.tableRowList().add(new TableRow(x, y, r, isHit, LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMMM, dd, yyyy HH:mm:ss", Locale.US)), (System.nanoTime() - startTime) / 1000000.0F));
         request.getSession().setAttribute(Parameter.TABLE_DATA.toString(), tableData);
 
-        final var writer = response.getWriter();
-
-        for (int i = 0; i < tableData.tableRowList().size(); i++) {
-            writer.println("<tr>");
-            final var row = tableData.tableRowList().get(i);
-            writer.println("<td>" + i + "</td>");
-            writer.println("<td>" + row.x() + "</td>");
-            writer.println("<td>" + row.y() + "</td>");
-            writer.println("<td>" + row.r() + "</td>");
-            if (row.wasHit()) {
-                writer.println("<td> <p class=\"status status-hit\">HIT</p></td>");
-            } else {
-                writer.println("<td> <p class=\"status status-miss\">MISS</p></td>");
-            }
-            writer.println("<td>" + row.attemptTime() + "</td>");
-            writer.println("<td>" + row.processTimeMills() + "ms" + "</td>");
-            writer.println("</tr>");
-        }
-        writer.close();
+//        final var writer = response.getWriter();
+//
+//        for (int i = 0; i < tableData.tableRowList().size(); i++) {
+//            writer.println("<tr>");
+//            final var row = tableData.tableRowList().get(i);
+//            writer.println("<td>" + i + "</td>");
+//            writer.println("<td>" + row.x() + "</td>");
+//            writer.println("<td>" + row.y() + "</td>");
+//            writer.println("<td>" + row.r() + "</td>");
+//            if (row.wasHit()) {
+//                writer.println("<td> <p class=\"status status-hit\">HIT</p></td>");
+//            } else {
+//                writer.println("<td> <p class=\"status status-miss\">MISS</p></td>");
+//            }
+//            writer.println("<td>" + row.attemptTime() + "</td>");
+//            writer.println("<td>" + row.processTimeMills() + "ms" + "</td>");
+//            writer.println("</tr>");
+//        }
+//        writer.close();
     }
 
     private static boolean isHit(float x, float y, float r) {
