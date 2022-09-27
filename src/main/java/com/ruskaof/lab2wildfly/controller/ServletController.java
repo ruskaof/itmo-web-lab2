@@ -1,6 +1,6 @@
 package com.ruskaof.lab2wildfly.controller;
 
-import com.ruskaof.lab2wildfly.utils.Parameter;
+import com.ruskaof.lab2wildfly.controller.utils.RequestParameter;
 import com.vk.api.sdk.client.TransportClient;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
@@ -32,24 +32,17 @@ public class ServletController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        UserAuthResponse authResponse = vk.oAuth()
-//                .userAuthorizationCodeFlow(APP_ID, CLIENT_SECRET, REDIRECT_URI, code)
-//                .execute();
-//
-//        UserActor actor = new UserActor(authResponse.getUserId(), authResponse.getAccessToken());
-
-
         //  Select a servlet to proceed the request
-        if (request.getParameter(Parameter.X.toString()) != null
-                && request.getParameter(Parameter.Y.toString()) != null
-                && request.getParameter(Parameter.R.toString()) != null) {
+        if (request.getParameter(RequestParameter.X.toString()) != null
+                && request.getParameter(RequestParameter.Y.toString()) != null
+                && request.getParameter(RequestParameter.R.toString()) != null) {
 
             System.out.println("redirect to area_check");
             getServletContext().getNamedDispatcher("ServletAreaCheck").forward(request, response);
-        } else if (request.getParameter(Parameter.CLEAR.toString()) != null) {
+        } else if (request.getParameter(RequestParameter.CLEAR.toString()) != null) {
             System.out.println("redirect to clear table");
             getServletContext().getNamedDispatcher("ServletClearTable").forward(request, response);
-        } else if (request.getParameter(Parameter.TABLE_HTMl.toString()) != null) {
+        } else if (request.getParameter(RequestParameter.TABLE_HTML.toString()) != null) {
             System.out.println("redirect to get table");
             getServletContext().getNamedDispatcher("ServletGetTableHtml").forward(request, response);
         } else {

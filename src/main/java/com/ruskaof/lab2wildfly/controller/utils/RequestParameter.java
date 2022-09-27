@@ -1,18 +1,17 @@
-package com.ruskaof.lab2wildfly.utils;
+package com.ruskaof.lab2wildfly.controller.utils;
 
-public enum Parameter {
+public enum RequestParameter {
     X("x"),
     Y("y"),
     R("r"),
     ROUND("round_if_needed"),
-    TABLE_DATA("table_data"),
     CLEAR("clear"),
-    TABLE_HTMl("table_html");
+    TABLE_HTML("table_html");
 
 
     private final String stringName;
 
-    Parameter(String stringName) {
+    RequestParameter(String stringName) {
         this.stringName = stringName;
     }
 

@@ -1,8 +1,8 @@
 package com.ruskaof.lab2wildfly.controller;
 
-import com.ruskaof.lab2wildfly.model.TableData;
-import com.ruskaof.lab2wildfly.utils.Parameter;
+import com.ruskaof.lab2wildfly.model.ClicksRepository;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,10 +12,12 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletGetTableHtml", value = "/ServletGetTableHtml")
 public class ServletGetTableHtml extends HttpServlet {
+    @EJB
+    ClicksRepository clicksRepository;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        var tableData = (TableData) request.getSession().getAttribute(Parameter.TABLE_DATA.toString());
-        if (tableData == null) tableData = new TableData();
+        var tableData = clicksRepository.getClicks(request.getSession());
 
         final var writer = response.getWriter();
 

@@ -1,10 +1,10 @@
 package com.ruskaof.lab2wildfly.controller;
 
 
-import com.ruskaof.lab2wildfly.model.TableData;
-import com.ruskaof.lab2wildfly.model.TableRow;
-import com.ruskaof.lab2wildfly.utils.Parameter;
+import com.ruskaof.lab2wildfly.controller.utils.RequestParameter;
+import com.ruskaof.lab2wildfly.model.ClicksRepository;
 
+import javax.ejb.EJB;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +20,17 @@ import java.util.Locale;
  */
 @WebServlet(name = "ServletAreaCheck")
 public class ServletAreaCheck extends HttpServlet {
+    @EJB
+    ClicksRepository clicksRepository;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("ServletAreaCheck");
         long startTime = System.nanoTime();
 
-        final var xString = request.getParameter(Parameter.X.toString());
-        final var yString = request.getParameter(Parameter.Y.toString());
-        final var rString = request.getParameter(Parameter.R.toString());
+        final var xString = request.getParameter(RequestParameter.X.toString());
+        final var yString = request.getParameter(RequestParameter.Y.toString());
+        final var rString = request.getParameter(RequestParameter.R.toString());
 
         final float x;
         final float y;
@@ -45,32 +48,8 @@ public class ServletAreaCheck extends HttpServlet {
 
         final var isHit = isHit(x, y, r);
 
-        var tableData = (TableData) request.getSession().getAttribute(Parameter.TABLE_DATA.toString());
-        if (tableData == null) tableData = new TableData();
 
-
-        tableData.tableRowList().add(new TableRow(x, y, r, isHit, LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMMM, dd, yyyy HH:mm:ss", Locale.US)), (System.nanoTime() - startTime) / 1000000.0F));
-        request.getSession().setAttribute(Parameter.TABLE_DATA.toString(), tableData);
-
-//        final var writer = response.getWriter();
-//
-//        for (int i = 0; i < tableData.tableRowList().size(); i++) {
-//            writer.println("<tr>");
-//            final var row = tableData.tableRowList().get(i);
-//            writer.println("<td>" + i + "</td>");
-//            writer.println("<td>" + row.x() + "</td>");
-//            writer.println("<td>" + row.y() + "</td>");
-//            writer.println("<td>" + row.r() + "</td>");
-//            if (row.wasHit()) {
-//                writer.println("<td> <p class=\"status status-hit\">HIT</p></td>");
-//            } else {
-//                writer.println("<td> <p class=\"status status-miss\">MISS</p></td>");
-//            }
-//            writer.println("<td>" + row.attemptTime() + "</td>");
-//            writer.println("<td>" + row.processTimeMills() + "ms" + "</td>");
-//            writer.println("</tr>");
-//        }
-//        writer.close();
+        clicksRepository.addNote(request.getSession(), new TableRow(x, y, r, isHit, LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMMM, dd, yyyy HH:mm:ss", Locale.US)), (System.nanoTime() - startTime) / 1000000.0F));
     }
 
     private static boolean isHit(float x, float y, float r) {

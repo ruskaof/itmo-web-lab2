@@ -1,4 +1,4 @@
-package com.ruskaof.lab2wildfly.model;
+package com.ruskaof.lab2wildfly.controller;
 
 import java.io.Serializable;
 

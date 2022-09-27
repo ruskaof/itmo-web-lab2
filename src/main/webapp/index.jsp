@@ -3,8 +3,8 @@
 <%@ page import="java.io.BufferedReader" %>
 <%@ page import="java.io.InputStreamReader" %>
 <%@ page import="java.io.IOException" %>
-<%@ page import="com.ruskaof.lab2wildfly.utils.Urls" %>
-<%@ page import="com.ruskaof.lab2wildfly.utils.Constants" %>
+<%@ page import="com.ruskaof.lab2wildfly.controller.utils.Urls" %>
+<%@ page import="com.ruskaof.lab2wildfly.controller.utils.Constants" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
@@ -12,13 +12,13 @@
 <%
     if (request.getParameter("code") == null) {
         System.out.println("go to get code");
-        String redirectURL = Urls.vkOauthAuthorizePage(Constants.clientId, Urls.BASE_URL);
+        String redirectURL = Urls.vkOauthAuthorizePage(Constants.CLIENT_ID, Urls.BASE_URL);
         response.sendRedirect(redirectURL);
     } else {
         try {
             System.out.println("code got");
 
-            String redirectURL = Urls.vkOauthGetAccessToken(Constants.clientId, Urls.BASE_URL, Constants.clientSecret, request.getParameter("code"));
+            String redirectURL = Urls.vkOauthGetAccessToken(Constants.CLIENT_ID, Urls.BASE_URL, Constants.CLIENT_SECRET, request.getParameter("code"));
 
             String recv;
             StringBuilder recvbuff = new StringBuilder();
