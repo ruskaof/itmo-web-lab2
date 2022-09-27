@@ -13,6 +13,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+ * https://dev.vk.com/api/access-token/authcode-flow-user
+ */
 public class VkAuthManager implements AuthManager {
     @Override
     public void makeAuth(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -34,7 +37,11 @@ public class VkAuthManager implements AuthManager {
                         recvbuff.append(recv);
                     buffread.close();
 
-                    System.out.println(recvbuff);
+                    final var jsonAuthResponse = buffread.toString();
+                    if (!jsonAuthResponse.contains("access_token")) {
+                        response.sendError(401);
+                        return;
+                    }
                     request.getSession().setAttribute(SessionAttribute.ACCESS_TOKEN.toString(), recvbuff);
                 } catch (IOException e) {
                     response.sendError(401);
