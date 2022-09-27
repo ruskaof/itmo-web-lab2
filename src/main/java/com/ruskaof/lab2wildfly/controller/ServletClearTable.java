@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ServletClearTable", value = "/ServletClearTable")
+@WebServlet(name = "ServletClearTable")
 public class ServletClearTable extends HttpServlet {
 
     @EJB

@@ -1,8 +1,7 @@
 package com.ruskaof.lab2wildfly.controller.utils;
 
 public enum SessionAttribute {
-    CLICKS_REPOSITORY("clicks_repository");
-//    TABLE_DATA("table_data");
+    ACCESS_TOKEN("access_token");
 
     private final String stringName;
 
