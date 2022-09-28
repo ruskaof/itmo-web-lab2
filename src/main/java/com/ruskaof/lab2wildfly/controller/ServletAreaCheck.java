@@ -63,9 +63,9 @@ public class ServletAreaCheck extends HttpServlet {
 
     private static boolean isHit(float x, float y, float r) {
 
-        final var triangleHit = (x <= 0 && x >= -r && y >= 0 && y <= r / 2 && r / 2 + 0.5 * x >= y);
-        final var sectorHit = (x >= 0 && x <= r / 2 && y >= 0 && y <= r / 2 && x * x + y * y <= r * r / 4);
-        final var rectangleHit = (x >= 0 && x <= r / 2 && y <= 0 && y >= -r);
+        final var triangleHit = (x <= 0 && x >= -r / 2 && y >= 0 && y <= r && r + 2 * x >= y);
+        final var sectorHit = (x <= 0 && y <= 0 && x * x + y * y <= r * r / 4);
+        final var rectangleHit = (x >= 0 && x <= r && y <= 0 && y >= -r);
 
         return triangleHit || sectorHit || rectangleHit;
     }
