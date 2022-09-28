@@ -1,6 +1,5 @@
-package com.ruskaof.lab2wildfly.controller.auth_impl;
+package com.ruskaof.lab2wildfly.model.auth;
 
-import com.ruskaof.lab2wildfly.controller.auth.AuthManager;
 import com.ruskaof.lab2wildfly.controller.utils.Constants;
 import com.ruskaof.lab2wildfly.controller.utils.SessionAttribute;
 import com.ruskaof.lab2wildfly.controller.utils.Urls;
@@ -37,13 +36,15 @@ public class VkAuthManager implements AuthManager {
                         recvbuff.append(recv);
                     buffread.close();
 
-                    final var jsonAuthResponse = buffread.toString();
+                    final var jsonAuthResponse = recvbuff.toString();
                     if (!jsonAuthResponse.contains("access_token")) {
+                        System.out.println(jsonAuthResponse + " no access token(");
                         response.sendError(401);
                         return;
                     }
                     request.getSession().setAttribute(SessionAttribute.ACCESS_TOKEN.toString(), recvbuff);
                 } catch (IOException e) {
+                    System.out.println("io ex");
                     response.sendError(401);
                 }
             }

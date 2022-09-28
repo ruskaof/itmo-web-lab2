@@ -1,4 +1,4 @@
-package com.ruskaof.lab2wildfly.model;
+package com.ruskaof.lab2wildfly.model.repository;
 
 import com.ruskaof.lab2wildfly.controller.TableData;
 import com.ruskaof.lab2wildfly.controller.TableRow;

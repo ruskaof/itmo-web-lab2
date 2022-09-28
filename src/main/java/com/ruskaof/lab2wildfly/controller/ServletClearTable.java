@@ -1,6 +1,6 @@
 package com.ruskaof.lab2wildfly.controller;
 
-import com.ruskaof.lab2wildfly.model.ClicksRepository;
+import com.ruskaof.lab2wildfly.model.repository.ClicksRepository;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;

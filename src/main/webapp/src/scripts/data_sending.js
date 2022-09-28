@@ -14,6 +14,7 @@ export function bindDataSendingButtons(
             x: formData.x,
             y: formData.y,
             r: formData.r,
+            round_if_needed: 1
         })
     })
 
@@ -33,7 +34,8 @@ export function bindDataSendingButtons(
         submitClickWithParameters({
             x: x,
             r: r,
-            y: y
+            y: y,
+            round_if_needed: 0
         })
     };
 

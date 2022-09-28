@@ -1,4 +1,4 @@
-package com.ruskaof.lab2wildfly.controller.auth;
+package com.ruskaof.lab2wildfly.model.auth;
 
 
 import javax.servlet.http.HttpServletRequest;

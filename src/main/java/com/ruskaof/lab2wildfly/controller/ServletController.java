@@ -16,7 +16,7 @@ import java.io.IOException;
  * Main servlet that accepts all the requests from client and
  * delegates its work to other servlets.
  * <p>
- * If request contains "x", "y", "r" parameters -> ServletAreaCheck is executed
+ * If request contains "x", "y", "r", "round_if_needed" parameters -> ServletAreaCheck is executed
  * If request contains "clear"  parameter -> ServletClearTable is executed
  * Else -> ServletGetTable is executed
  * <p>
@@ -35,7 +35,8 @@ public class ServletController extends HttpServlet {
         //  Select a servlet to proceed the request
         if (request.getParameter(RequestParameter.X.toString()) != null
                 && request.getParameter(RequestParameter.Y.toString()) != null
-                && request.getParameter(RequestParameter.R.toString()) != null) {
+                && request.getParameter(RequestParameter.R.toString()) != null
+                && request.getParameter(RequestParameter.ROUND.toString()) != null) {
 
             System.out.println("redirect to area_check");
             getServletContext().getNamedDispatcher("ServletAreaCheck").forward(request, response);

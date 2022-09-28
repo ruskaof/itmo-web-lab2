@@ -2,7 +2,7 @@ package com.ruskaof.lab2wildfly.controller;
 
 
 import com.ruskaof.lab2wildfly.controller.utils.RequestParameter;
-import com.ruskaof.lab2wildfly.model.ClicksRepository;
+import com.ruskaof.lab2wildfly.model.repository.ClicksRepository;
 
 import javax.ejb.EJB;
 import javax.servlet.annotation.WebServlet;
@@ -31,20 +31,29 @@ public class ServletAreaCheck extends HttpServlet {
         final var xString = request.getParameter(RequestParameter.X.toString());
         final var yString = request.getParameter(RequestParameter.Y.toString());
         final var rString = request.getParameter(RequestParameter.R.toString());
+        final var roundString = request.getParameter(RequestParameter.ROUND.toString());
 
         final float x;
         final float y;
         final float r;
+        final int round;
         try {
             x = Float.parseFloat(xString);
             y = Float.parseFloat(yString);
             r = Float.parseFloat(rString);
+            round = Integer.parseInt(roundString);
         } catch (NumberFormatException | NullPointerException ignored) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        // TODO: add "rounding" handling
+        if (round != 0) {
+            if (xString.length() > 14 || yString.length() > 14 || rString.length() > 14) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                return;
+            }
+        }
+
 
         final var isHit = isHit(x, y, r);
 

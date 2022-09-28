@@ -1,5 +1,5 @@
-<%@ page import="com.ruskaof.lab2wildfly.controller.auth_impl.VkAuthManager" %>
-<%@ page import="com.ruskaof.lab2wildfly.controller.auth.AuthManager" %>
+<%@ page import="com.ruskaof.lab2wildfly.model.auth.VkAuthManager" %>
+<%@ page import="com.ruskaof.lab2wildfly.model.auth.AuthManager" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>

@@ -1,8 +1,7 @@
-package com.ruskaof.lab2wildfly.model_impl;
+package com.ruskaof.lab2wildfly.model.repository;
 
 import com.ruskaof.lab2wildfly.controller.TableData;
 import com.ruskaof.lab2wildfly.controller.TableRow;
-import com.ruskaof.lab2wildfly.model.ClicksRepository;
 
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpSession;
