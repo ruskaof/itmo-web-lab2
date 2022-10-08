@@ -81,7 +81,7 @@
                         <option value="3">3</option>
                     </select>
                 </div>
-                <div class="buttons">
+                <div class="buttons-container">
                     <div>
                         <button
                                 class="mybutton"
