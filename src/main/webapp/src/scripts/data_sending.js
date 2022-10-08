@@ -67,6 +67,8 @@ export function bindDataSendingButtons(
             $("#" + "tbody").html(response_text);
         }).then(() => {
             clickSentCallback()
+        }).catch(() => {
+            alert("There was a network error. Please check your internet connection.")
         });
     }
 }

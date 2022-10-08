@@ -351,6 +351,8 @@ export function initializeCanvasGraph(
             return response.text()
         }).then((response_text) => {
             dots = JSON.parse(response_text).tableRowList
+        }).catch(() => {
+            alert("There was a network error. Please check your internet connection.")
         });
     }
 
