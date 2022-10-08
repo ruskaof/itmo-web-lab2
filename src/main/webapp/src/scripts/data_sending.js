@@ -60,15 +60,13 @@ export function bindDataSendingButtons(
         fetch(BASE_URL + "/ServletController?" + new URLSearchParams(parameters), {
             method: "GET",
         }).then(() => {
-            fetch(BASE_URL + "/ServletController?table_html=1").then((response) => {
-                return response.text()
-            }).then((response_text) => {
-                $(function () {
-                    $("#" + "tbody").html(response_text);
-                });
-            }).then(() => {
-                clickSentCallback()
-            });
-        })
+            return fetch(BASE_URL + "/ServletController?table_html=1")
+        }).then((response) => {
+            return response.text()
+        }).then((response_text) => {
+            $("#" + "tbody").html(response_text);
+        }).then(() => {
+            clickSentCallback()
+        });
     }
 }
