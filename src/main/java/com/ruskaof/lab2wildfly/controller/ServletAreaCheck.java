@@ -42,7 +42,12 @@ public class ServletAreaCheck extends HttpServlet {
             y = Float.parseFloat(yString);
             r = Float.parseFloat(rString);
             round = Integer.parseInt(roundString);
-        } catch (NumberFormatException | NullPointerException ignored) {
+            if (Float.isNaN(x) || Float.isNaN(y) || Float.isNaN(r)) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                return;
+            }
+
+        } catch (NullPointerException | IllegalArgumentException ignored) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
