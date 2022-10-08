@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet(name = "ServletGetTableHtml", value = "/ServletGetTableHtml")
 public class ServletGetTableHtml extends HttpServlet {
@@ -17,13 +18,19 @@ public class ServletGetTableHtml extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        var tableData = clicksRepository.getClicks(request.getSession());
+        TableData tableData = clicksRepository.getClicks(request.getSession());
 
-        final var writer = response.getWriter();
+        final PrintWriter writer = response.getWriter();
 
+        printHtmlTable(writer, tableData);
+
+        writer.close();
+    }
+
+    private void printHtmlTable(PrintWriter writer, TableData tableData) {
         for (int i = 0; i < tableData.tableRowList().size(); i++) {
             writer.println("<tr>");
-            final var row = tableData.tableRowList().get(i);
+            final TableRow row = tableData.tableRowList().get(i);
             writer.println("<td>" + i + "</td>");
             writer.println("<td>" + row.x() + "</td>");
             writer.println("<td>" + row.y() + "</td>");
@@ -37,11 +44,5 @@ public class ServletGetTableHtml extends HttpServlet {
             writer.println("<td>" + row.processTimeMills() + "ms" + "</td>");
             writer.println("</tr>");
         }
-        writer.close();
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }
