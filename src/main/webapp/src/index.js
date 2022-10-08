@@ -17,4 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         initializeCanvasGraph.updateDots()
     }, BASE_URL)
     includeValidation(documentIDs)
+
+    /* Remove unnecessary "code" query parameter that is there because of Vk auth */
+    window.history.replaceState(null, null, window.location.pathname);
 });
