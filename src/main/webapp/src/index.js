@@ -9,9 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(BASE_URL + "/ServletController?table_html=1").then((response) => {
         return response.text()
     }).then((response_text) => {
-        $(function () {
-            $("#" + "tbody").html(response_text);
-        });
+        $("#" + "tbody").html(response_text);
     })
 
     initializeCanvasGraph(BASE_URL)
@@ -19,4 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         initializeCanvasGraph.updateDots()
     }, BASE_URL)
     includeValidation(documentIDs)
+
+    /* Remove unnecessary "code" query parameter that is there because of Vk auth */
+    window.history.replaceState(null, null, window.location.pathname);
 });

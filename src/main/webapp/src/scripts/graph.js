@@ -23,6 +23,9 @@ export function initializeCanvasGraph(
     const axisColor = getCssColor("--primary-text")
     const areasColor = getCssColor("--areas-color")
 
+    const hitDotColor = getCssColor("--hit-dot-color")
+    const missDotColor = getCssColor("--miss-dot-color")
+
     let dots = []
 
     /* Init html canvas element */
@@ -87,7 +90,11 @@ export function initializeCanvasGraph(
         dots.forEach((dot) => {
             const x = convertXToCanvasCoordinate(dot.x, dot.r, rValue)
             const y = convertYToCanvasCoordinate(dot.y, dot.r, rValue)
-            ctx.fillStyle = cursorColor;
+            if (dot.wasHit) {
+                ctx.fillStyle = hitDotColor
+            } else {
+                ctx.fillStyle = missDotColor
+            }
             ctx.beginPath();
             ctx.arc(x, y, 3, 0, Math.PI * 2);
             ctx.fill();
@@ -351,6 +358,8 @@ export function initializeCanvasGraph(
             return response.text()
         }).then((response_text) => {
             dots = JSON.parse(response_text).tableRowList
+        }).catch(() => {
+            alert("There was a network error. Please check your internet connection.")
         });
     }
 
