@@ -3,9 +3,7 @@ export function bindDataSendingButtons(
     BASE_URL
 ) {
     $("#reset_button").on("click", () => {
-        submitClickWithParameters({
-            clear: 1
-        })
+        clearTable()
     })
     $("#submit_button").on("click", () => {
         const formData = Object.fromEntries(new FormData(document.getElementById("form")).entries());
@@ -57,7 +55,11 @@ export function bindDataSendingButtons(
 
 
     function submitClickWithParameters(parameters) {
-        fetch(BASE_URL + "/servlet-controller?" + new URLSearchParams(parameters), {
+        location.replace(BASE_URL + "/servlet-controller?" + new URLSearchParams(parameters))
+    }
+
+    function clearTable() {
+        fetch(BASE_URL + "/servlet-controller?" + new URLSearchParams({clear: 1}), {
             method: "GET",
         }).then(() => {
             return fetch(BASE_URL + "/servlet-controller?table_html=1")

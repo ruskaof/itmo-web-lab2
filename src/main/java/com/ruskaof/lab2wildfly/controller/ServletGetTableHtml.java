@@ -1,5 +1,7 @@
 package com.ruskaof.lab2wildfly.controller;
 
+import com.ruskaof.lab2wildfly.controller.utils.Constants;
+import com.ruskaof.lab2wildfly.controller.utils.Urls;
 import com.ruskaof.lab2wildfly.model.repository.ClicksRepository;
 
 import javax.ejb.EJB;
@@ -28,6 +30,34 @@ public class ServletGetTableHtml extends HttpServlet {
     }
 
     private void printHtmlTable(PrintWriter writer, TableData tableData) {
+
+        writer.println("<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "    <meta charset=\"utf-8\"/>\n" +
+                "    <title>lab1</title>\n" +
+                "    <link rel=\"stylesheet\" href=\"./src/style/main.css\">\n" +
+                "</head>\n");
+
+        writer.println("<div class=\"list-item\">\n" +
+                "            <div class=\"card\">\n" +
+                "                <table id=\"my_table\">\n" +
+                "                    <thead>\n" +
+                "                    <tr>\n" +
+                "                        <th>№</th>\n" +
+                "                        <th>X</th>\n" +
+                "                        <th>Y</th>\n" +
+                "                        <th>R</th>\n" +
+                "                        <th>Result</th>\n" +
+                "                        <th>Attempt time</th>\n" +
+                "                        <th>Process time</th>\n" +
+                "                    </tr>\n" +
+                "                    </thead>\n" +
+                "\n" +
+                "                    <tbody id=\"tbody\">\n");
+
+
+
         for (int i = 0; i < tableData.tableRowList().size(); i++) {
             writer.println("<tr>");
             final TableRow row = tableData.tableRowList().get(i);
@@ -44,5 +74,20 @@ public class ServletGetTableHtml extends HttpServlet {
             writer.println("<td>" + row.processTimeMills() + "ms" + "</td>");
             writer.println("</tr>");
         }
+
+        writer.println(
+                        "\n" +
+                        "                    </tbody>\n" +
+                        "                </table>\n" +
+                        "            </div>\n" +
+                        "        </div>"
+        );
+
+        writer.println("<a href=\""+ Urls.BASE_URL +"\">go back</a>");
+
+        writer.println("</body>\n" +
+                "\n" +
+                "</html>");
     }
+
 }

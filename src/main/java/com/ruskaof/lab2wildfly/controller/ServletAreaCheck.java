@@ -5,6 +5,7 @@ import com.ruskaof.lab2wildfly.controller.utils.RequestParameter;
 import com.ruskaof.lab2wildfly.model.repository.ClicksRepository;
 
 import javax.ejb.EJB;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class ServletAreaCheck extends HttpServlet {
     ClicksRepository clicksRepository;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         System.out.println("ServletAreaCheck");
         long startTime = System.nanoTime();
 
@@ -64,6 +65,7 @@ public class ServletAreaCheck extends HttpServlet {
 
 
         clicksRepository.addNote(request.getSession(), new TableRow(x, y, r, isHit, LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMMM, dd, yyyy HH:mm:ss", Locale.US)), (System.nanoTime() - startTime) / 1000000.0F));
+        getServletContext().getNamedDispatcher("ServletGetTableHtml").forward(request, response);
     }
 
     private static boolean isHit(float x, float y, float r) {

@@ -104,27 +104,6 @@
             </form>
         </div>
 
-        <div class="list-item">
-            <div class="card">
-                <table id="my_table">
-                    <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>X</th>
-                        <th>Y</th>
-                        <th>R</th>
-                        <th>Result</th>
-                        <th>Attempt time</th>
-                        <th>Process time</th>
-                    </tr>
-                    </thead>
-
-                    <tbody id="tbody">
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 
 </div>
