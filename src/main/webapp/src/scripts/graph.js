@@ -352,7 +352,7 @@ export function initializeCanvasGraph(
     }
 
     function updateDots() {
-        fetch(BASE_URL + "/ServletController", {
+        fetch(BASE_URL + "/servlet-controller", {
             method: "GET",
         }).then((response) => {
             return response.text()

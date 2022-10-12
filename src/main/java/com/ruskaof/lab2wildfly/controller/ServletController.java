@@ -22,7 +22,7 @@ import java.io.IOException;
  * <p>
  * These parameters should not be mixed to prevent unexpected response.
  */
-@WebServlet(name = "ServletController", value = "/ServletController")
+@WebServlet(name = "ServletController", value = "/servlet-controller")
 public class ServletController extends HttpServlet {
     private static final TransportClient transportClient = new HttpTransportClient();
     private static final VkApiClient vk = new VkApiClient(transportClient);

@@ -6,7 +6,7 @@ import {BASE_URL, documentIDs} from "./scripts/contstants/constants.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     /* Update table data as soon as the page loads */
-    fetch(BASE_URL + "/ServletController?table_html=1").then((response) => {
+    fetch(BASE_URL + "/servlet-controller?table_html=1").then((response) => {
         return response.text()
     }).then((response_text) => {
         $("#" + "tbody").html(response_text);

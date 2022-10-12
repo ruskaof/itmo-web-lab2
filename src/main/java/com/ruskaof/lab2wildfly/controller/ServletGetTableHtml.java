@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "ServletGetTableHtml", value = "/ServletGetTableHtml")
+@WebServlet(name = "ServletGetTableHtml")
 public class ServletGetTableHtml extends HttpServlet {
     @EJB
     ClicksRepository clicksRepository;

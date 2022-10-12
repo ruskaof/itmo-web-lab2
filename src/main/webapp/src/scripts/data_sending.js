@@ -57,10 +57,10 @@ export function bindDataSendingButtons(
 
 
     function submitClickWithParameters(parameters) {
-        fetch(BASE_URL + "/ServletController?" + new URLSearchParams(parameters), {
+        fetch(BASE_URL + "/servlet-controller?" + new URLSearchParams(parameters), {
             method: "GET",
         }).then(() => {
-            return fetch(BASE_URL + "/ServletController?table_html=1")
+            return fetch(BASE_URL + "/servlet-controller?table_html=1")
         }).then((response) => {
             return response.text()
         }).then((response_text) => {
